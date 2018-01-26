@@ -24,7 +24,7 @@ task :default do
       else                      prompt_to_link_files(f)
     end
   end
-  Rake::Task['vundle'].execute
+  Rake::Task['vim_plug'].execute
 end
 
 desc "Install vim_plug for vim plugins"
