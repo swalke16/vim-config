@@ -239,7 +239,8 @@
   nmap <Leader>er :w<CR> :call ElmRepl()<CR>
 
 " React JSX support
-  Plug "mxw/vim-jsx", { 'for': 'jsx' }
+  Plug "git://github.com/pangloss/vim-javascript", { 'for': 'jsx' }
+  Plug "git://github.com/mxw/vim-jsx.git", { 'for': 'jsx' }
   let g:jsx_ext_required = 0
 
 " Vue Single File Component support
