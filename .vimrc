@@ -1,4 +1,8 @@
-set rtp+=~/.vim/bundle/neobundle.vim/
+if empty(glob('~/.vim/autoload/plug.vim'))
+  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+endif
 
 runtime! custom_preconfig/*.vim
 runtime! common_config/*.vim
