@@ -4,7 +4,6 @@
 
 " Plugins requiring no additional configuration or keymaps
   Plug 'michaeljsmith/vim-indent-object'
-  Plug 'oscarh/vimerl'
   Plug 'pangloss/vim-javascript'
   Plug 'tomtom/tcomment_vim'
   Plug 'tpope/vim-endwise'
@@ -17,7 +16,6 @@
   Plug 'vim-scripts/matchit.zip'
   Plug 'vim-scripts/ruby-matchit'
   Plug 'tpope/vim-abolish'
-  Plug 'leafgarland/typescript-vim'
 
  " Vim airline configs
   Plug 'bling/vim-airline'
@@ -39,9 +37,8 @@
 " Easy motion config
   Plug 'Lokaltog/vim-easymotion'
 
-"Supertab code completion"
-  Plug 'ervandew/supertab'
-  let g:SuperTabContextDefaultCompletionType = "<c-n>"
+" YouCompleteMe code completion
+  Plug 'Valloric/YouCompleteMe'
 
 
 " Dash Searching"
@@ -59,10 +56,6 @@
 
     " respect the .gitignore
     let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files . --cached --exclude-standard --others']
-
-" Go
-  Plug 'jnwhiteh/vim-golang'
-    au BufNewFile,BufRead *.go set filetype=go
 
 " Slim
   Plug 'slim-template/vim-slim'
@@ -111,9 +104,9 @@
 " NERDTree for project drawer
   Plug 'scrooloose/nerdtree'
     let NERDTreeHijackNetrw = 0
+    let NERDTreeIgnore=['\.rbc$', '\~$']
     nmap <leader>g :NERDTreeToggle<CR>
     nmap <leader>G :NERDTreeFind<CR>
-
 
 " Tabular for aligning text
   Plug 'godlygeek/tabular'
@@ -138,7 +131,6 @@
   Plug 'vim-scripts/ZoomWin'
     map <Leader>z :ZoomWin<CR>
 
-
 " Unimpaired for keymaps for quicky manipulating lines and files
   Plug 'tpope/vim-unimpaired'
     " Bubble single lines
@@ -149,7 +141,6 @@
     vmap <C-Up> [egv
     vmap <C-Down> ]egv
 
-
 " Syntastic for catching syntax errors on save
   Plug 'scrooloose/syntastic'
     let g:syntastic_enable_signs=1
@@ -158,12 +149,20 @@
     let g:syntastic_mode_map = { 'mode': 'active',
                                \ 'active_filetypes': [],
                                \ 'passive_filetypes': ['haml','scss','sass','vue'] }
+  " Enable rubocop with syntastic
+    let g:syntastic_quiet_messages = {}
+    let g:syntastic_auto_loc_list = 1
+    let g:syntastic_loc_list_height = 5
 
+" Delimate configuration
+  Plug 'git://github.com/Raimondi/delimitMate.git'
+    au FileType * let b:delimitMate_autoclose = 1
+    " if using html auto complete (closing tag)
+    au FileType xml,html,xhtml let b:delimitMate_matchpairs = "(:),[:],{:}"
 
 " gundo for awesome undo tree visualization
   Plug 'sjl/gundo.vim'
     map <Leader>h :GundoToggle<CR>
-
 
 " rails.vim, nuff' said
   Plug 'tpope/vim-rails'
@@ -175,7 +174,6 @@
     map <Leader>os :Rstylesheet<Space>
     map <Leader>oi :Rintegration<Space>
 
-
 " surround for adding surround 'physics'
   Plug 'tpope/vim-surround'
     " # to surround with ruby string interpolation
@@ -186,34 +184,14 @@
     let g:surround_61 = "<%= \r %>"
 
 
-" Clojure Highlighting"
-  Plug 'tpope/vim-fireplace', { 'for': 'clojure' }
-  Plug 'tpope/vim-classpath', { 'for': 'clojure' }
-  Plug 'guns/vim-clojure-static', { 'for': 'clojure' }
-  Plug 'vim-scripts/paredit.vim', { 'for': 'clojure' }
-  autocmd BufNewFile,BufRead *.clj set filetype=clojure
-  autocmd BufNewFile,BufRead *.edn set filetype=clojure
-  autocmd BufNewFile,BufRead *.cljs set filetype=clojure
-  autocmd BufNewFile,BufRead *.cljx set filetype=clojure
-
-  let g:paredit_leader= '\'
-  let vimclojure#ParenRainbow  = 1
-
 " Jade Highlighting"
   Plug 'digitaltoad/vim-jade', { 'for': 'jade' }
   autocmd BufNewFile,BufRead *.jade set filetype=jade
-
-" Scala Highlighting"
-  Plug 'derekwyatt/vim-scala', { 'for': 'scala' }
-  autocmd BufNewFile,BufRead *.scala set filetype=scala
 
 " Elixir plugin
   Plug 'elixir-lang/vim-elixir', { 'for': 'elixir' }
     au BufNewFile,BufRead *.ex set filetype=elixir
     au BufNewFile,BufRead *.exs set filetype=elixir
-
-" Rust!
-  Plug 'wting/rust.vim', { 'for': 'rust' }
 
 " Easy async RSpec running
   Plug 'thoughtbot/vim-rspec'
@@ -224,19 +202,6 @@
   nmap <Leader>rl :wa<CR> :call RunLastSpec()<CR>
   nmap <Leader>ra :wa<CR> :call RunAllSpecs()<CR>
 
-" Elm support -- https://elm-lang.org
-  Plug 'lambdatoast/elm.vim', { 'for': 'elm' }
-  " Compilation
-  nmap <Leader>em :w<CR> :ElmMakeCurrentFile<CR>
-  nmap <Leader>emm :wa<CR> :ElmMakeMain<CR>
-
-  " Evaluation
-  nmap <Leader>el :w<CR> :ElmEvalLine<CR>
-  vmap <Leader>es :w<CR> :<C-u>ElmEvalSelection<CR>
-
-  " REPL
-  nmap <Leader>er :w<CR> :call ElmRepl()<CR>
-
 " React JSX support
   Plug 'git://github.com/pangloss/vim-javascript', { 'for': 'jsx' }
   Plug 'git://github.com/mxw/vim-jsx.git', { 'for': 'jsx' }
@@ -245,4 +210,19 @@
 " Vue Single File Component support
   Plug 'posva/vim-vue', { 'for': 'vue' }
 
- call plug#end() 
+" Turn off jslint errors by default
+  Plug 'git://github.com/hallettj/jslint.vim.git'
+    let g:JSLintHighlightErrorLine = 0
+
+" Use gitv for gitx like repository browsing
+  Plug 'gregsexton/gitv', {'on': ['Gitv']}
+
+
+" Use greplace for finding and replacing across files
+  Plug 'git://github.com/skwp/greplace.vim.git'
+
+
+" Use AutoTag to update tags on save
+  Plug 'git://github.com/vim-scripts/AutoTag.git'
+
+ call plug#end()

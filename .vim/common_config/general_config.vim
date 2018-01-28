@@ -106,3 +106,26 @@
 
 " JSON is JS
   au BufNewFile,BufRead *.json set ai filetype=javascript
+
+" highlight the current line
+  set cursorline
+
+" Without setting this, ZoomWin restores windows in a way that causes
+" equalalways behavior to be triggered the next time CommandT is used.
+" This is likely a bludgeon to solve some other issue, but it works
+  set noequalalways
+
+" Use modeline overrides
+  set modeline
+  set modelines=10
+
+" Default color scheme
+  set background=dark
+  color jellybeans
+
+" Automatically strip whitespace
+  autocmd! BufWrite * mark ' | silent! %s/\s\+$// | norm ''
+
+" Sudo write the file
+  cmap w!! %!sudo tee > /dev/null %
+

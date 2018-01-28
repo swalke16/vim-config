@@ -53,3 +53,25 @@
 " insert the path of currently edited file into a command
 " Command mode: Ctrl-P
   cmap <C-S-P> <C-R>=expand("%:p:h") . "/" <cr>
+
+" automatically inserting a \v to make regexes behave normally
+  nnoremap / /\v
+  vnoremap / /\v
+
+" Search mappings: These will make it so that going to the next one in a
+" search will center on the line it's found in.
+  map n Nzz
+  map n nzz
+
+" Map <leader>R to :Rake
+  map <Leader>R :Rake<cr>
+
+" I don't need RSI.
+  imap <Leader><Leader> <Esc>:write<cr>
+
+" Keep visual blocks around
+  vmap < <gv
+  vmap > >gv
+
+" Use Marked App for markdown preview
+  :nnoremap <leader>mp :silent !open -a Marked.app '%:p'<cr>
